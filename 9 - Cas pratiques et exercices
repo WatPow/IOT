@@ -1,0 +1,40 @@
+# Cas pratiques et exercices
+
+Enfin, le cours s’est conclu par une série de **cas pratiques et exercices** visant à consolider les connaissances. Ces exercices ont permis de manipuler concrètement les outils IoT et de réfléchir à la sécurité. Parmi ceux-ci :
+
+## Expérimentations avec Mosquitto, MQTTBox et Node-RED
+Dans un premier temps, on a réalisé des expérimentations simples pour bien comprendre le fonctionnement de **MQTT**. On a utilisé les outils suivants :
+
+- **Mosquitto** : on a exploité le broker public Mosquitto (`test.mosquitto.org`) comme terrain de jeu. L’idée était de se connecter à ce broker open et d’y échanger des messages.
+- **MQTTBox** : c’est un client MQTT graphique, disponible en application (ou extension Chrome), qui facilite les tests. On a installé MQTTBox sur nos PC. Puis on a créé **plusieurs clients MQTT** dans MQTTBox, chacun se connectant à un broker de test différent (Mosquitto public, le broker public de HiveMQ, et MQTTDashboard). Une fois connectés, on a pu **publier des messages** sur un topic commun (par ex. `coursIoT/test`) et voir les autres les recevoir en temps réel, validant le principe pub/sub. On a également testé les wildcard en s’abonnant à `coursIoT/#` pour recevoir tous les sous-topics. C’était un moyen ludique de se familiariser avec la syntaxe MQTT et d’observer les échanges.
+- **Node-RED** : on a aussi utilisé Node-RED comme client MQTT, en profitant de ses nœuds prêts à l’emploi. Par exemple, on a monté un flux Node-RED où un nœud **MQTT in** était abonné au topic `#` (tout) sur le broker public, et relié à un nœud **debug** pour afficher tous les messages reçus. En parallèle, un nœud **MQTT out** permettait d’envoyer des messages sur un topic donné. Grâce à cette configuration, Node-RED est devenu un **espion universel** du broker : on voyait défiler dans sa console tous les messages publiés par tous les utilisateurs connectés au broker public (ce qui, comme discuté, soulève des enjeux de vie privée!).
+
+Ces manipulations ont renforcé la compréhension de comment se comportent les clients MQTT et mis en évidence l’absence de sécurité par défaut sur un broker ouvert.
+
+## Mise en place d’un broker MQTT personnel (Shiftr.io)
+Ensuite, on a découvert **Shiftr.io**, un service en ligne offrant un **broker MQTT personnel et visualisable**. Shiftr.io propose deux modes : un broker cloud hébergé sur leur site, et la possibilité de télécharger un broker local. Nous avons opté pour la version cloud gratuite. Les étapes réalisées :
+
+- **Création d’un compte et d’une instance** : on s’est inscrit sur le site *cloud.shiftr.io* et on a créé une nouvelle **instance de broker MQTT privée**. On a choisi un nom d’instance, ce qui nous a donné une URL du type `monNom.cloud.shiftr.io`. Shiftr.io a généré pour cette instance un **login** (identifiant) et un **token** (servant de mot de passe).
+- **Connexion à l’instance** : via l’interface web Shiftr, on peut se connecter et observer les messages. Mais on a aussi testé l’envoi de messages vers notre broker Shiftr en utilisant l’outil en ligne de commande **mosquitto_pub**. Par exemple, depuis le Raspberry Pi on a exécuté :
+```bash
+mosquitto_pub -h monNom.cloud.shiftr.io -u monLogin -P monToken -t 'Test' -m 'HELLO'
+```
+pour publier "HELLO" sur le topic `Test`. On a pu voir ce message apparaître dans l’interface web Shiftr en temps réel, ce qui était assez satisfaisant. De même, on pouvait ajouter un nœud MQTT dans Node-RED pointant vers `monNom.cloud.shiftr.io` avec les bons identifiants, pour intégrer ce broker dans nos flux.
+
+- **Visualisation et debug** : l’interface Shiftr.io affiche graphiquement les topics sous forme de bulles qui s’animent à chaque message, ce qui aide à comprendre qui envoie quoi. C’est un outil très pédagogique pour observer les échanges MQTT et vérifier que tout fonctionne comme prévu. On a ainsi utilisé Shiftr pour debugger nos publications.
+
+Cet exercice a montré comment déployer en quelques clics un **broker MQTT personnel sur le cloud**, avec un accès restreint (login/token) – c’est déjà un net progrès par rapport aux brokers publics ouverts. Bien sûr, pour une solution de production, on préférerait un broker auto-hébergé ou un cloud plus robuste, mais Shiftr est idéal pour expérimenter en sécurité (d’autant qu’on peut le passer en TLS aussi si besoin).
+
+## Analyse de la sécurité des messages MQTT publics
+Un des ateliers les plus instructifs a consisté à **analyser le flot de messages circulant sur un broker public** afin d’illustrer concrètement les problèmes de sécurité évoqués plus tôt. Pour cela, on a monté un petit dispositif de type *honeypot* :
+
+- On a configuré Node-RED pour qu’il s’abonne à **tous les topics** (`#`) sur le broker public **MQTT Dashboard** (broker.mqttdashboard.com) ou HiveMQ public.
+- On a ensuite relié ce flux à notre broker Shiftr.io, en gros on a fait un **pont MQTT** : chaque message reçu du broker public était instantanément **republié** sur notre broker privé Shiftr. Techniquement, cela se fait en Node-RED en ayant un nœud MQTT in (souscrit à `#` sur mqttdashboard) relié à un nœud MQTT out (pointant vers monNom.cloud.shiftr.io, sans spécifier de topic pour reprendre le même que celui reçu).
+
+- Résultat : sur l’interface Shiftr, on voyait apparaître **tous les topics et messages** qui transitaient sur le broker public, comme si on “aspirait” son contenu. C’était assez édifiant de voir la quantité de données partagées ouvertement. On a pu observer par exemple des messages de capteurs météo, des états de machines, parfois des messages texte de tests… Dans certains cas, des noms de topics évoquaient des entreprises ou des projets réels, ce qui laisse penser que certains laissent involontairement des systèmes de test connectés en production sur ces brokers publics.
+
+- On a discuté des implications : si nous, en quelques minutes, avons pu intercepter ces données, un acteur malveillant pourrait en faire autant sur une plus longue durée et peut-être reconstituer des informations sensibles (ex: horaires de présence si des capteurs de mouvement publient en clair, etc.). Voire, si des commandes passent par là, il pourrait essayer d’en injecter.
+
+Ce **“fishing” de messages MQTT publics** a été un exercice marquant pour comprendre que la **sécurité par l’obscurité n’est pas une stratégie** : publier sur un broker sans authentification en se disant que “personne ne saura” est illusoire – il est trivial de tout écouter.
+
+Pour conclure cette partie pratique, les enseignants ont insisté sur le fait que ces exercices visaient à reproduire, à petite échelle, ce que des attaquants font à grande échelle. D’où l’importance, encore une fois, de ne **jamais laisser un objet connecté communiquer en clair sur des canaux publics** au-delà de simples démonstrations. Chaque projet IoT doit intégrer dès sa phase de prototypage une réflexion sur le **confinement des données** et la **sécurisation des échanges**, faute de quoi on expose potentiellement des informations ou un contrôle à des personnes non autorisées.
