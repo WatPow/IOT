@@ -18,7 +18,7 @@ D) enregistrant les appareils uniquement lors de leur première connexion
 
 ### 📚 Source :
 > "Cela signifie que **l’objet ne s’enregistre réellement dans AWS IoT que lorsqu’il se connecte pour la première fois**, ce qui **économise de l’argent** (on n’a pas à enregistrer des milliers d’objets qui ne seront peut-être jamais utilisés/vendus)."  
-→ *Document : 8 - Autres services Cloud et IoT.txt*&#8203;:contentReference[oaicite:0]{index=0}
+→ *Document : 8 - Autres services Cloud et IoT.txt
 
 
 ---
