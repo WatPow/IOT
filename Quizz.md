@@ -290,7 +290,7 @@
 ---
 
 ### 37 - Pour détecter un comportement anormal des objets :
-A) un profil de sécurité Device Defender peut être utilisé  
+✅ A) un profil de sécurité Device Defender peut être utilisé  
 ❌ B) TLS devrait être utilisé  
-C) des règles peuvent être utilisées pour compter le nombre de messages  
-D) on peut s’abonner aux topics système  
+✅ C) des règles peuvent être utilisées pour compter le nombre de messages  
+✅ D) on peut s’abonner aux topics système  
