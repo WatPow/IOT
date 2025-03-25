@@ -7,6 +7,8 @@ D) enregistrant les appareils uniquement lors de leur première connexion
 ### ✅ Réponse correcte :
 **D) enregistrant les appareils uniquement lors de leur première connexion**
 
+---
+
 ### ❌ Mauvaises réponses :
 - **A)** Faux – Le texte ne mentionne aucun lien entre JITR et l’échec aux tests qualité.
 - **B)** Faux – La gestion de l’infrastructure PKI n’est pas directement évitée par JITR.
