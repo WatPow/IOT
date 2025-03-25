@@ -1,0 +1,17 @@
+# Introduction et définition de l'IoT
+
+## Définition de l’IoT
+L’**Internet of Things (IoT)** désigne l’**interconnexion via Internet d’objets physiques dotés de capacités de calcul**. La définition donnée par l’Oxford Dictionary est « *The interconnection via the Internet of computing devices embedded in everyday objects, enabling them to send and receive data* ». En d’autres termes plus simples, l’IoT représente *l’interface entre le monde physique et le monde numérique* : des objets courants équipés de capteurs, d’actionneurs et de connectivité peuvent collecter des données et communiquer via le réseau.
+
+## Domaines d’application
+L’IoT trouve des applications dans de nombreux domaines variés :
+- **Domotique (maison connectée)** – par ex. gestion des lumières, thermostat intelligent, appareils électroménagers communicants.
+- **Santé** – dispositifs médicaux connectés et télésanté (bracelets de suivi d’activité, pacemakers, pompes à insuline communicantes, systèmes d’appel d’urgence eCall).
+- **Industrie et logistique** – automatismes industriels, suivi de flotte de véhicules ou d’équipements (Industrie 4.0), capteurs sur les chaînes de production, distributeurs intelligents.
+- **Sport et loisirs** – objets connectés pour le quantified self, capteurs de performance sportive, équipements de fitness connectés .
+- **Énergie** – compteurs intelligents (smart meters) pour le suivi de consommation, gestion optimisée du réseau électrique (smart grids) .
+- **Automobile** – véhicules connectés échangeant des données (infodivertissement, navigation) et véhicules autonomes s’appuyant sur des capteurs et communications en temps réel .
+- **Autres** – villes intelligentes (Smart City), agriculture connectée (agritech), commerce (retail intelligent), etc.
+
+## Croissance du nombre d’objets connectés
+Le nombre d’objets IoT explose et devrait atteindre des niveaux très élevés dans les années à venir. Les projections tablent sur **des dizaines de milliards d’objets connectés d’ici 2030**. Par exemple, Gartner estime qu’il y aura plus de **30 milliards d’objets IoT en 2025**, et certaines projections anticipent environ **50 milliards d’objets connectés en 2030**. Concrètement, cela correspond à plus de **100 nouveaux objets connectés mis en service chaque seconde** dans le monde. Cette prolifération rapide s’accompagne malheureusement de défis en matière de sécurité, comme en témoigne le fait que **84 % des organisations ayant déployé des solutions IoT ont déjà subi une faille de sécurité liée à l’IoT**. La sécurisation de ces objets et de leurs données est donc un enjeu critique dès l’introduction de l’IoT.
