@@ -4,6 +4,23 @@ B) évitant la gestion de notre propre infrastructure PKI
 C) évitant l’enregistrement des appareils qui ne sont pas encore vendus  
 D) enregistrant les appareils uniquement lors de leur première connexion  
 
+### ✅ Réponse correcte :  
+**C) évitant l’enregistrement des appareils qui ne sont pas encore vendus**  
+**D) enregistrant les appareils uniquement lors de leur première connexion**
+
+### ❌ Réponses incorrectes :  
+**A) évitant l’enregistrement des appareils ayant échoué aux tests qualité en production**  
+→ Non mentionné dans le support.  
+**B) évitant la gestion de notre propre infrastructure PKI**  
+→ Le JITR n'évite pas la gestion d'une PKI ; les certificats sont toujours nécessaires (souvent générés par AWS).
+
+---
+
+### 🎓 Source :  
+> *"JITR (Just-In-Time Registration) permet de ne **créer un objet dans la plateforme cloud que lorsqu’il se connecte pour la première fois avec un certificat valide**. Cela évite d’avoir à préenregistrer des milliers d’objets en avance, dont une partie ne sera peut-être jamais activée (stock invendu, panne…). C’est donc une façon d’**économiser sur la gestion et le coût d’infrastructure**."*  
+📄 *Fichier :* **8 - Autres services Cloud et IoT.txt**&#8203;:contentReference[oaicite:0]{index=0}
+
+
 ---
 
 ### 2 - Clé de liaison Zigbee 3.0 :
