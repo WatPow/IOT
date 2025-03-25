@@ -25,7 +25,7 @@ D) enregistrant les appareils uniquement lors de leur première connexion
 
 ### 🎓 Source :  
 > *"JITR (Just-In-Time Registration) permet de ne **créer un objet dans la plateforme cloud que lorsqu’il se connecte pour la première fois avec un certificat valide**. Cela évite d’avoir à préenregistrer des milliers d’objets en avance, dont une partie ne sera peut-être jamais activée (stock invendu, panne…). C’est donc une façon d’**économiser sur la gestion et le coût d’infrastructure**."*  
-📄 *Fichier :* **8 - Autres services Cloud et IoT.txt**&#8203;:contentReference[oaicite:0]{index=0}
+📄 *Fichier :* 8 - Autres services Cloud et IoT.txt
 
 
 ---
